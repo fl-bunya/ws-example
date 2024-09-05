@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+const { Buffer } = require('buffer');
 
 // WebSocketサーバーをポート8080で作成
 const wss = new WebSocket.Server({ port: 8080 });
@@ -27,7 +28,9 @@ wss.on('connection', (ws) => {
 
   // クライアントからメッセージを受け取ったときの処理
   ws.on('message', (message) => {
-    console.log('受信したメッセージ: ', message);
+    const buffer = Buffer.from(message, 'utf8');
+    const text = buffer.toString('utf8');
+    console.log('受信したメッセージ: ', text);
 
     // メッセージをテキスト形式で履歴に追加
     const textMessage = message.toString(); // バッファを文字列に変換
