@@ -102,6 +102,13 @@
     const messageInput = document.getElementById('message');
     const sendButton = document.getElementById('send');
 
+    // ランダムな絵文字を取得する関数
+    const getRandomEmoji = () => {
+      const emojis = ['😊', '🚀', '🌟', '😎', '🎉', '🔥', '💡', '✨', '🍛', '🌈', '👶', '😸', '🐶', '👽'];
+      return emojis[Math.floor(Math.random() * emojis.length)];
+    };
+    const ICON = getRandomEmoji();
+
     socket.addEventListener('open', () => {
       console.log('サーバーに接続されました');
       addMessage('サーバーに接続されました');
@@ -137,7 +144,7 @@
     function sendMessage() {
       const message = messageInput.value;
       if (message !== '') {
-        socket.send(message);
+        socket.send(ICON + message);
         messageInput.value = '';
       }
     }
