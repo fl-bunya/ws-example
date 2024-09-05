@@ -1,0 +1,13 @@
+name: Run Curl Every 15 Minutes
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # 15分毎に実行
+
+jobs:
+  curl_job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Execute Curl Command
+      run: curl -X GET https://ws-example-client.onrender.com/
