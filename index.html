@@ -18,7 +18,7 @@
   <button id="send">送信</button>
 
   <script>
-    const socket = new WebSocket('ws://localhost:8080');
+    const socket = new WebSocket('https://ws-example.onrender.com');
     const chatDiv = document.getElementById('chat');
     const messageInput = document.getElementById('message');
     const sendButton = document.getElementById('send');
@@ -30,8 +30,23 @@
     });
 
     // サーバーからメッセージを受信したときの処理
+    // socket.addEventListener('message', (event) => {
+    //   addMessage('受信: ' + event.data);
+    // });
+
+    // サーバーからメッセージを受信したときの処理
     socket.addEventListener('message', (event) => {
-      addMessage('受信: ' + event.data);
+      if (typeof event.data === 'string') {
+        // 受信データがテキストの場合
+        addMessage('受信: ' + event.data);
+      } else {
+        // 受信データがBlobの場合、テキストに変換
+        const reader = new FileReader();
+        reader.onload = function() {
+          addMessage('受信: ' + reader.result);
+        };
+        reader.readAsText(event.data); // Blobをテキストとして読み取る
+      }
     });
 
     // 接続が閉じられたときの処理
