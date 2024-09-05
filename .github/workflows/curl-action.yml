@@ -9,5 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Execute Curl Command
+    - name: Execute Curl Command on Client
       run: curl -X GET https://ws-example-client.onrender.com/
+
+    - name: Execute Curl Command on Server
+      run: curl -X GET https://ws-example.onrender.com/
