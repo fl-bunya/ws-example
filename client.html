@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocketチャットアプリ</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    #chat { border: 1px solid #ccc; width: 100%; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
+    #message { width: 80%; }
+    #send { width: 18%; }
+  </style>
+</head>
+<body>
+  <h1>WebSocketチャットアプリ</h1>
+  <div id="chat"></div>
+  <input type="text" id="message" placeholder="メッセージを入力..." />
+  <button id="send">送信</button>
+
+  <script>
+    const socket = new WebSocket('ws://localhost:8080');
+    const chatDiv = document.getElementById('chat');
+    const messageInput = document.getElementById('message');
+    const sendButton = document.getElementById('send');
+
+    // 接続が開かれたときの処理
+    socket.addEventListener('open', () => {
+      console.log('サーバーに接続されました');
+      addMessage('サーバーに接続されました');
+    });
+
+    // サーバーからメッセージを受信したときの処理
+    socket.addEventListener('message', (event) => {
+      addMessage('受信: ' + event.data);
+    });
+
+    // 接続が閉じられたときの処理
+    socket.addEventListener('close', () => {
+      console.log('サーバーから切断されました');
+      addMessage('サーバーから切断されました');
+    });
+
+    // 送信ボタンが押されたときの処理
+    sendButton.addEventListener('click', () => {
+      const message = messageInput.value;
+      if (message !== '') {
+        socket.send(message);
+        addMessage('送信: ' + message);
+        messageInput.value = ''; // メッセージを送信後、入力フィールドをクリア
+      }
+    });
+
+    // チャットエリアにメッセージを追加する関数
+    function addMessage(message) {
+      const messageElement = document.createElement('div');
+      messageElement.textContent = message;
+      chatDiv.appendChild(messageElement);
+      chatDiv.scrollTop = chatDiv.scrollHeight; // 最新メッセージにスクロール
+    }
+  </script>
+</body>
+</html>
