@@ -2,7 +2,7 @@ name: Run Curl Every 15 Minutes
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # 15分毎に実行
+    - cron: '*/14 * * * *'  # 14分毎に実行
 
 jobs:
   curl_job:
