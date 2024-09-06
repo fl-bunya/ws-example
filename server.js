@@ -55,3 +55,22 @@ wss.on('connection', (ws) => {
 });
 
 console.log('WebSocketチャットサーバーがポート8080で起動中...');
+
+
+
+// renderのsleep対策
+const URL_SERVER = `https://ws-example.onrender.com/`;
+const URL_CLIENT = `https://ws-example-client.onrender.com/`;
+const interval = 840000; // 14 minutes
+
+async function reloadWebsite(url) {
+  try {
+    const response = await fetch(url);
+    console.log(`Reloaded at ${new Date().toISOString()}: Status Code ${response.status}`);
+  } catch (error) {
+    console.error(`Error reloading at ${new Date().toISOString()}:`, error.message);
+  }
+}
+
+setInterval(() => reloadWebsite(URL_SERVER), interval);
+setInterval(() => reloadWebsite(URL_CLIENT), interval);
