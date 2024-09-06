@@ -1,4 +1,4 @@
-name: Run Curl Every 15 Minutes
+name: Run Curl Every *** Minutes
 
 on:
   schedule:
