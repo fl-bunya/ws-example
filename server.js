@@ -4,7 +4,7 @@ const { Buffer } = require('buffer');
 // WebSocketサーバーをポート8080で作成
 const wss = new WebSocket.Server({ port: 8080 });
 
-// メッセージ履歴を保存する配列（最大10件）
+// メッセージ履歴を保存する配列
 const messageHistory = [];
 
 const MAX_HISTORY = 1000;
@@ -12,7 +12,7 @@ const MAX_HISTORY = 1000;
 wss.on('connection', (ws) => {
   console.log('クライアントが接続しました。');
 
-  // 過去の10件のメッセージを接続したクライアントに送信
+  // 過去のメッセージを接続したクライアントに送信
   messageHistory.forEach((message) => {
     ws.send(message);
   });
@@ -36,7 +36,7 @@ wss.on('connection', (ws) => {
     const textMessage = message.toString(); // バッファを文字列に変換
     messageHistory.push(textMessage);
 
-    // メッセージ履歴が10件を超えたら古いものを削除
+    // メッセージ履歴の古いものを削除
     if (messageHistory.length > MAX_HISTORY) {
       messageHistory.shift(); // 最古のメッセージを削除
     }
@@ -61,7 +61,7 @@ console.log('WebSocketチャットサーバーがポート8080で起動中...');
 // renderのsleep対策
 const URL_SERVER = `https://ws-example.onrender.com/`;
 const URL_CLIENT = `https://ws-example-client.onrender.com/`;
-const interval = 840000; // 14 minutes
+const interval = 600000; // 10 minutes
 
 async function reloadWebsite(url) {
   try {
