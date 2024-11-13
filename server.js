@@ -59,10 +59,6 @@ console.log('WebSocketチャットサーバーがポート8080で起動中...');
 
 
 // renderのsleep対策
-const URL_SERVER = `https://ws-example.onrender.com/`;
-const URL_CLIENT = `https://ws-example-client.onrender.com/`;
-const interval = 600000; // 10 minutes
-
 async function reloadWebsite(url) {
   try {
     const response = await fetch(url);
@@ -72,5 +68,13 @@ async function reloadWebsite(url) {
   }
 }
 
+const URL_SERVER = `https://ws-example.onrender.com/`;
+const URL_CLIENT = `https://ws-example-client.onrender.com/`;
+const interval = 600000; // 10 minutes
+
 setInterval(() => reloadWebsite(URL_SERVER), interval);
 setInterval(() => reloadWebsite(URL_CLIENT), interval);
+
+// TODO: vercelのsleep対策をここに書かない、削除する
+const URL_VERCEL = `https://lib-henna.vercel.app/`;
+setInterval(() => reloadWebsite(URL_VERCEL), interval);
