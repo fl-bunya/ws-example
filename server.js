@@ -76,5 +76,6 @@ setInterval(() => reloadWebsite(URL_SERVER), interval);
 setInterval(() => reloadWebsite(URL_CLIENT), interval);
 
 // TODO: vercelのsleep対策をここに書かない、削除する
+const INTERVAL_VERCEL = 300000; // 5 minutes
 const URL_VERCEL = `https://lib-henna.vercel.app/`;
-setInterval(() => reloadWebsite(URL_VERCEL), interval);
+setInterval(() => reloadWebsite(URL_VERCEL), INTERVAL_VERCEL);
